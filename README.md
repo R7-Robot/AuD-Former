@@ -1,5 +1,5 @@
 # AuD-Former
-This repository contains the source code for our paper: "Hierarchical Transformer Network for Multimodal Audio-Based Disease Prediction", submitted to IEEE Transactions on Knowledge and Data Engineering. For more details, please refer to [our project website](https://sites.google.com/view/audformer)
+This repository contains the source code for our paper: "Hierarchical Transformer Network for Multimodal Audio-Based Disease Prediction", submitted to IEEE Transactions on Knowledge and Data Engineering. For more details, please refer to [our project website](https://sites.google.com/view/audformer).
 
 
 ## Abstract
@@ -54,7 +54,7 @@ If you find the code or the paper useful for your research, please cite our pape
 ## Acknowledgement
 
 Contributors:  
-[Ruiqi Wang](https://github.com/R7-Robot);[Dezhong Zhao](https://github.com/zdz0086).
+[Ruiqi Wang](https://github.com/R7-Robot); [Dezhong Zhao](https://github.com/zdz0086); [Jinjin Cai](https://github.com/R7-Robot).
 
 Part of the code is based on the following repositories:  
 
