@@ -45,20 +45,15 @@ python main.py --eval
 
 #### How change the model
 
-## Citation
-If you find the code or the paper useful for your research, please cite our paper:
-```
 
-```
 
 ## Acknowledgement
 
 Contributors:  
-[Ruiqi Wang](https://github.com/R7-Robot); [Dezhong Zhao](https://github.com/zdz0086); [Jinjin Cai](https://github.com/R7-Robot).
 
-Part of the code is based on the following repositories:  
+[Ruiqi Wang](https://github.com/R7-Robot); [Dezhong Zhao](https://github.com/zdz0086); [Jinjin Cai](https://github.com/CJR7).
 
-[Husformer](https://github.com/SMARTlab-Purdue/Husformer).
+Part of the code is based on the following repositories: [Husformer](https://github.com/SMARTlab-Purdue/Husformer).
 
 
 
