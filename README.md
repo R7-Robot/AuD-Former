@@ -11,12 +11,6 @@ Audio-based disease prediction is emerging as a promising supplement to traditio
 <img src="/figures/Framework-AuDFormer.png" width="800" />
 </div>  
 
-## Illustration of the transformer network and multi-head self-attention
-
-<div align=center>
-<img src="/figures/SAAT.png" width="800" />
-</div>  
-
 ## Usage
 ### Requirements
 1. Install the required Python package and version
