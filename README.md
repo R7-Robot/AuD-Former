@@ -50,7 +50,6 @@ python main.py --eval
 ## Acknowledgement
 
 Contributors:  
-
 [Ruiqi Wang](https://github.com/R7-Robot); [Dezhong Zhao](https://github.com/zdz0086); [Jinjin Cai](https://github.com/CJR7).
 
 Part of the code is based on the following repositories: [Husformer](https://github.com/SMARTlab-Purdue/Husformer).
