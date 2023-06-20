@@ -1,6 +1,5 @@
 # AuD-Former
-This repository contains the source code for our paper: "Hierarchical Transformer Network for Multimodal Audio-Based Disease Prediction", submitted for xxxx. 
-For more details, please refer to [our project website](xxxx)
+This repository contains the source code for our paper: "Hierarchical Transformer Network for Multimodal Audio-Based Disease Prediction", submitted to IEEE Transactions on Knowledge and Data Engineering. For more details, please refer to [our project website](https://sites.google.com/view/audformer)
 
 
 ## Abstract
