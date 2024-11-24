@@ -15,7 +15,7 @@ parser.add_argument('--model', type=str, default='Audformer',
 
 # Tasks
 parser.add_argument('--dataset', type=str, default='Audformer',
-                    help='dataset to use (default: Audformer)')
+                    help='dataset to use (default: mosei_senti)')
 parser.add_argument('--data_path', type=str, default='data',
                     help='path for storing the dataset')
 
@@ -47,8 +47,8 @@ parser.add_argument('--clip', type=float, default=0.8,
 parser.add_argument('--lr', type=float, default=1e-3,
                     help='initial learning rate (default: 1e-3)')
 parser.add_argument('--optim', type=str, default='SGD',
-                    help='optimizer to use (default: SGD)')
-parser.add_argument('--num_epochs', type=int, default=1,
+                    help='optimizer to use (default: Adam)')
+parser.add_argument('--num_epochs', type=int, default=80,
                     help='number of epochs (default: 40)')
 parser.add_argument('--when', type=int, default=5,
                     help='when to decay learning rate (default: 20)')
@@ -119,10 +119,12 @@ hyp_params.orig_d_m1, hyp_params.orig_d_m2, hyp_params.orig_d_m3,hyp_params.orig
 hyp_params.orig_d_m8, hyp_params.orig_d_m9, hyp_params.orig_d_m10,hyp_params.orig_d_m11,hyp_params.orig_d_m12, hyp_params.orig_d_m13,hyp_params.orig_d_m14 = train_data.get_dim1()
 hyp_params.orig_d_m15, hyp_params.orig_d_m16, hyp_params.orig_d_m17,hyp_params.orig_d_m18,hyp_params.orig_d_m19, hyp_params.orig_d_m20,hyp_params.orig_d_m21 = train_data.get_dim2()
 hyp_params.orig_d_m22, hyp_params.orig_d_m23, hyp_params.orig_d_m24,hyp_params.orig_d_m25,hyp_params.orig_d_m26, hyp_params.orig_d_m27,hyp_params.orig_d_m28 = train_data.get_dim3()
+hyp_params.orig_d_m29, hyp_params.orig_d_m30, hyp_params.orig_d_m31, hyp_params.orig_d_m32,hyp_params.orig_d_m33, hyp_params.orig_d_m34, hyp_params.orig_d_m35 = train_data.get_dim4()
 hyp_params.m1_len, hyp_params.m2_len, hyp_params.m3_len, hyp_params.m4_len, hyp_params.m5_len, hyp_params.m6_len, hyp_params.m7_len = train_data.get_seq_len()
 hyp_params.m8_len, hyp_params.m9_len, hyp_params.m10_len, hyp_params.m11_len, hyp_params.m12_len, hyp_params.m13_len, hyp_params.m14_len = train_data.get_seq_len1()
 hyp_params.m15_len, hyp_params.m16_len, hyp_params.m17_len, hyp_params.m18_len, hyp_params.m19_len, hyp_params.m20_len, hyp_params.m21_len = train_data.get_seq_len2()
 hyp_params.m22_len, hyp_params.m23_len, hyp_params.m24_len, hyp_params.m25_len, hyp_params.m26_len, hyp_params.m27_len, hyp_params.m28_len = train_data.get_seq_len3()
+hyp_params.m29_len, hyp_params.m30_len, hyp_params.m31_len, hyp_params.m32_len, hyp_params.m33_len, hyp_params.m34_len, hyp_params.m35_len = train_data.get_seq_len4()
 hyp_params.layers = args.nlevels
 hyp_params.use_cuda = use_cuda
 hyp_params.dataset = dataset

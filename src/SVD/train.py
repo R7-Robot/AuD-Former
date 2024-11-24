@@ -2,11 +2,17 @@ import torch
 from torch import nn
 import sys
 from src import models
-from src.utils.utils  import *
+from src.utils.utils import *
 import torch.optim as optim
 import numpy as np
 import time
 from torch.optim.lr_scheduler import ReduceLROnPlateau
+import os
+import pickle
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import precision_recall_fscore_support
+from sklearn.metrics import accuracy_score, f1_score
 from src.utils.eval_metrics import *
 
 
@@ -48,7 +54,7 @@ def train_model(settings, hyp_params, train_loader, valid_loader, test_loader):
         start_time = time.time()
         mae_train2 = 0
         for i_batch, (batch_X, batch_Y, batch_META) in enumerate(train_loader):
-            sample_ind, m1,m2,m3,m4,m5,m6,m7,m8,m9,m10,m11,m12,m13,m14,m15,m16,m17,m18,m19,m20,m21 = batch_X
+            sample_ind, m1,m2,m3,m4,m5,m6,m7,m8,m9,m10,m11,m12,m13,m14,m15,m16,m17,m18,m19,m20,m21,m22,m23,m24,m25,m26,m27,m28,m29,m30,m31,m32,m33,m34,m35 = batch_X
             eval_attr = batch_Y.squeeze(-1)   # if num of labels is 1
             
             model.zero_grad()
@@ -58,13 +64,16 @@ def train_model(settings, hyp_params, train_loader, valid_loader, test_loader):
                     m1,m2,m3,m4,m5,m6,m7,eval_attr = m1.cuda(),m2.cuda(),m3.cuda(),m4.cuda(),m5.cuda(),m6.cuda(),m7.cuda(),eval_attr.cuda()
                     m8,m9,m10,m11,m12,m13,m14 = m8.cuda(),m9.cuda(),m10.cuda(),m11.cuda(),m12.cuda(),m13.cuda(),m14.cuda()
                     m15,m16,m17,m18,m19,m20,m21 = m15.cuda(),m16.cuda(),m17.cuda(),m18.cuda(),m19.cuda(),m20.cuda(),m21.cuda()
+                    m22,m23,m24,m25,m26,m27,m28 = m22.cuda(),m23.cuda(),m24.cuda(),m25.cuda(),m26.cuda(),m27.cuda(),m28.cuda()
+                    m29,m30,m31,m32,m33,m34,m35 = m29.cuda(),m30.cuda(),m31.cuda(),m32.cuda(),m33.cuda(),m34.cuda(),m35.cuda()
             
             batch_size = m1.size(0)
+            batch_chunk = hyp_params.batch_chunk
 
             combined_loss = 0
             net = nn.DataParallel(model) if batch_size > 10 else model
-
-            preds, hiddens = net(m1,m2,m3,m4,m5,m6,m7,m8,m9,m10,m11,m12,m13,m14,m15,m16,m17,m18,m19,m20,m21)
+            
+            preds, hiddens = net(m1,m2,m3,m4,m5,m6,m7,m8,m9,m10,m11,m12,m13,m14,m15,m16,m17,m18,m19,m20,m21,m22,m23,m24,m25,m26,m27,m28,m29,m30,m31,m32,m33,m34,m35)
             raw_loss = criterion(preds, eval_attr)
             combined_loss = raw_loss 
             combined_loss.backward()
@@ -99,7 +108,7 @@ def train_model(settings, hyp_params, train_loader, valid_loader, test_loader):
 
         with torch.no_grad():
             for i_batch, (batch_X, batch_Y, batch_META) in enumerate(loader):
-                sample_ind,m1,m2,m3,m4,m5,m6,m7,m8,m9,m10,m11,m12,m13,m14,m15,m16,m17,m18,m19,m20,m21= batch_X
+                sample_ind,m1,m2,m3,m4,m5,m6,m7,m8,m9,m10,m11,m12,m13,m14,m15,m16,m17,m18,m19,m20,m21,m22,m23,m24,m25,m26,m27,m28,m29,m30,m31,m32,m33,m34,m35 = batch_X
                 eval_attr = batch_Y.squeeze(dim=-1) # if num of labels is 1
             
                 if hyp_params.use_cuda:
@@ -107,9 +116,11 @@ def train_model(settings, hyp_params, train_loader, valid_loader, test_loader):
                         m1,m2,m3,m4,m5,m6,m7,eval_attr = m1.cuda(),m2.cuda(),m3.cuda(),m4.cuda(),m5.cuda(),m6.cuda(),m7.cuda(),eval_attr.cuda()
                         m8,m9,m10,m11,m12,m13,m14 = m8.cuda(),m9.cuda(),m10.cuda(),m11.cuda(),m12.cuda(),m13.cuda(),m14.cuda()    
                         m15,m16,m17,m18,m19,m20,m21 = m15.cuda(),m16.cuda(),m17.cuda(),m18.cuda(),m19.cuda(),m20.cuda(),m21.cuda()
+                        m22,m23,m24,m25,m26,m27,m28 = m22.cuda(),m23.cuda(),m24.cuda(),m25.cuda(),m26.cuda(),m27.cuda(),m28.cuda()  
+                        m29,m30,m31,m32,m33,m34,m35 = m29.cuda(),m30.cuda(),m31.cuda(),m32.cuda(),m33.cuda(),m34.cuda(),m35.cuda()
                 batch_size = m1.size(0)
                 net = nn.DataParallel(model) if batch_size > 10 else model
-                preds, _ = net(m1,m2,m3,m4,m5,m6,m7,m8,m9,m10,m11,m12,m13,m14,m15,m16,m17,m18,m19,m20,m21)
+                preds, _ = net(m1,m2,m3,m4,m5,m6,m7,m8,m9,m10,m11,m12,m13,m14,m15,m16,m17,m18,m19,m20,m21,m22,m23,m24,m25,m26,m27,m28,m29,m30,m31,m32,m33,m34,m35)
                 total_loss += criterion(preds, eval_attr).item() * batch_size
 
                 # Collect the results into dictionary
@@ -121,14 +132,12 @@ def train_model(settings, hyp_params, train_loader, valid_loader, test_loader):
         results = torch.cat(results)
         truths = torch.cat(truths)
         return avg_loss, results, truths
-
     best_valid = 1e8
     for epoch in range(1, hyp_params.num_epochs+1):
         start = time.time()
         _,mae_train = train(model, optimizer, criterion)
         val_loss, _, _ = evaluate(model,criterion, test=False)
         test_loss, _, _ = evaluate(model,criterion, test=True)
-
         end = time.time()
         duration = end-start
         scheduler.step(val_loss)    # Decay learning rate by validation loss
@@ -143,5 +152,6 @@ def train_model(settings, hyp_params, train_loader, valid_loader, test_loader):
 
     model = load_model(hyp_params, name=hyp_params.name)
     _, results, truths,_ = evaluate(model, criterion, test=True)
-
     eval_hus(results, truths, True)
+
+

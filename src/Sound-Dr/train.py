@@ -1,10 +1,8 @@
 import torch
 from torch import nn
-import sys
 from src import models
 from src.utils.utils  import *
 import torch.optim as optim
-import numpy as np
 import time
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 from src.utils.eval_metrics import *
@@ -53,17 +51,17 @@ def train_model(settings, hyp_params, train_loader, valid_loader, test_loader):
             
             model.zero_grad()
             if hyp_params.use_cuda:
-                #print('111111')
                 with torch.cuda.device(0):
                     m1,m2,m3,m4,m5,m6,m7,eval_attr = m1.cuda(),m2.cuda(),m3.cuda(),m4.cuda(),m5.cuda(),m6.cuda(),m7.cuda(),eval_attr.cuda()
                     m8,m9,m10,m11,m12,m13,m14 = m8.cuda(),m9.cuda(),m10.cuda(),m11.cuda(),m12.cuda(),m13.cuda(),m14.cuda()
                     m15,m16,m17,m18,m19,m20,m21 = m15.cuda(),m16.cuda(),m17.cuda(),m18.cuda(),m19.cuda(),m20.cuda(),m21.cuda()
             
             batch_size = m1.size(0)
+            batch_chunk = hyp_params.batch_chunk
 
             combined_loss = 0
             net = nn.DataParallel(model) if batch_size > 10 else model
-
+            
             preds, hiddens = net(m1,m2,m3,m4,m5,m6,m7,m8,m9,m10,m11,m12,m13,m14,m15,m16,m17,m18,m19,m20,m21)
             raw_loss = criterion(preds, eval_attr)
             combined_loss = raw_loss 
@@ -121,7 +119,7 @@ def train_model(settings, hyp_params, train_loader, valid_loader, test_loader):
         results = torch.cat(results)
         truths = torch.cat(truths)
         return avg_loss, results, truths
-
+    
     best_valid = 1e8
     for epoch in range(1, hyp_params.num_epochs+1):
         start = time.time()
@@ -143,5 +141,7 @@ def train_model(settings, hyp_params, train_loader, valid_loader, test_loader):
 
     model = load_model(hyp_params, name=hyp_params.name)
     _, results, truths,_ = evaluate(model, criterion, test=True)
-
+    
     eval_hus(results, truths, True)
+
+

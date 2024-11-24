@@ -36,9 +36,9 @@ python main.py --eval
 
 (The code was tested in Ubuntu 20.04 with Python 3.8.)
 ### Change model
-We provide 2 models in code to correspond to the 2 data number of datasets as COSWARA and IPVS. You should add or remove some modalities in code, if you want to use more or less modalities by AuD-Former.
+We provide 5 models in code to correspond to the 5 data number of datasets as COSWARA, IPVS, PC-GITA, Sound-Dr and SVD. You should add or remove some modalities in code, if you want to use more or less modalities by AuD-Former.
 #### How change the model
-We name these files with their datasets. We put the general python files in [src](src), as the same time, the different datasets main python files are [main-COSWARA.py](main-COSWARA.py), [main-IPVS.py](main-IPVS.py) and different modalities python files in folder [src/COSWARA](src/COSWARA)and [src/IPVS](src/IPVS) , you should rename the main python files as 'main.py' and move the python files from 'src/x' to [src](src/).
+We name these files with their datasets. We put the general python files in [src](src), as the same time, the different datasets main python files are [main-COSWARA.py](main-COSWARA.py), [main-IPVS.py](main-IPVS.py), [main-PC-GITA.py](main-PC-GITA.py), [main-Sound-Dr.py](main-Sound-Dr.py), [main-SVD.py](main-SVD.py) and different modalities python files in folder [src/COSWARA](src/COSWARA), [src/IPVS](src/IPVS), [src/PC-GITA](src/PC-GITA), [src/Sound-Dr](src/Sound-Dr)and [src/SVD](src/SVD) , you should rename the main python files as 'main.py' and move the python files from 'src/x' to [src](src/).
 
 
 ## Acknowledgement
